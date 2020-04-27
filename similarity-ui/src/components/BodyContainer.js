@@ -3,6 +3,8 @@ import Grid from '@material-ui/core/Grid';
 import Filter from 'components/FilterOptions';
 import ImageList from 'components/ImageList';
 
+import { connect } from 'react-redux';
+
 
 class BodyContainer extends Component {
 
@@ -10,15 +12,22 @@ class BodyContainer extends Component {
 
         return (
             <Grid container spacing={1}> 
-                <Grid item xs={12} sm={12}>
-                    <Filter/>  
-                    <ImageList />
-                </Grid>
-                
+                {                    
+                    <Grid item xs={12} sm={12}>
+                        <Filter/>  
+                        <ImageList imageurl={this.props.selectedImage} />
+                    </Grid>                  
+                }                                         
             </Grid>
         )
     }
     
 }
 
-export default BodyContainer;
+function mapStateToProps(state){
+    return { 
+        selectedImage: state.image.selectedImage
+    }
+}
+
+export default connect(mapStateToProps)(BodyContainer);

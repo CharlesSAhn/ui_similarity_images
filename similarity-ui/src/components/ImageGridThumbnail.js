@@ -18,19 +18,22 @@ const useStyles = makeStyles((theme) => ({
       overflow: 'hidden',
       backgroundColor: theme.palette.background.paper,
     },
+    paper: {
+        padding: theme.spacing(0),
+        margin: 'auto',
+      },
     image: {
-        width: 200,
-        height: 200,
-        paddingTop: theme.spacing(2)
+        width: 120,
+        height: 120,
       },
     img: {
         display: 'block',
-        width: 180,
-        height: 180,
-        paddingLeft: theme.spacing(2)
+        width: 100,
+        height: 100,
+        marginLeft: theme.spacing(4),
       },
     fileNamePos: {
-        marginLeft: theme.spacing(2),
+        marginLeft: theme.spacing(4),
       },
     orange: {
         color: theme.palette.getContrastText(deepOrange[500]),
@@ -38,34 +41,34 @@ const useStyles = makeStyles((theme) => ({
     },
     andesite: {
         color: red[300],
-        marginLeft: theme.spacing(2),
+        marginLeft: theme.spacing(4),
     },
     gneiss: {
         color: deepPurple[300],
-        marginLeft: theme.spacing(2),
+        marginLeft: theme.spacing(4),
     },
     marble: {
         color: brown[300],
-        marginLeft: theme.spacing(2),
+        marginLeft: theme.spacing(4),
     },
     quartzite: {
         color: blue[300],
-        marginLeft: theme.spacing(2),
+        marginLeft: theme.spacing(4),
     },
     rhyolite: {
         color: deepOrange[300],
-        marginLeft: theme.spacing(2),
+        marginLeft: theme.spacing(4),
     },
     schist: {
         color: teal[300],
-        marginLeft: theme.spacing(2),
+        marginLeft: theme.spacing(4),
     },
   }));
 
 
 
 
-function ImageGrid(props) {
+function ImageGridThumbnail(props) {
 
     const classes = useStyles();
 
@@ -83,7 +86,6 @@ function ImageGrid(props) {
 
 
     //filter based on the search text
-    console.log(props.searchField)
     if (props.searchField.length > 0){
         if (props.searchField[0] !== ""){
             imageList = imageList.filter( function(image) {
@@ -100,9 +102,9 @@ function ImageGrid(props) {
         <Grid container spacing={3}> 
             {
                 imageList.map( image => (
-                    <Grid key={image.url} item xs={12} sm={2}>
-                        <Paper variant="outlined">
-                            <Grid item xs={12} sm container>
+                    <Grid key={image.url} item xs={12} sm={3}>
+                        <Paper variant="outlined" className={classes.paper}>
+                            
                                 <Grid item xs>
                                     <ButtonBase className={classes.image} onClick={selectImage}>   
                                         <img className={classes.img} src={image.url} alt={image.fileName} />                                                                                                           
@@ -161,7 +163,7 @@ function ImageGrid(props) {
                                     }                                                             
                                                                     
                                 </Grid>
-                            </Grid> 
+                         
                         </Paper>                                         
                     </Grid>                       
                 ))
@@ -175,9 +177,8 @@ function mapStateToProps(state){
     return { 
         type: state.type,
         searchField: state.searchField,
-        imageList: state.imageList,
-        selectedImage: state.image.selectedImage
+        imageList: state.imageList
     }
 }
 
-export default connect(mapStateToProps, actions) (ImageGrid);
+export default connect(mapStateToProps, actions) (ImageGridThumbnail);
