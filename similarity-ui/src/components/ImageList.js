@@ -29,7 +29,7 @@ class ImageList extends Component {
                         this.props.imageList.images.length > 0  && this.props.imageurl !== null && ( 
                             <Grid container spacing={1}> 
                                 <Grid item xs={12} sm={6}>
-                                    <ImageGridThumbnail />
+                                    <ImageGrid />
                                 </Grid>     
                                 <Grid item xs={12} sm={6}>
                                     <Image imageurl={this.props.imageurl}/>

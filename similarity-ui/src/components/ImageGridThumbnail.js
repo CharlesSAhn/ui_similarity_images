@@ -23,13 +23,13 @@ const useStyles = makeStyles((theme) => ({
         margin: 'auto',
       },
     image: {
-        width: 120,
-        height: 120,
+        width: 80,
+        height: 80,
       },
     img: {
         display: 'block',
-        width: 100,
-        height: 100,
+        width: 80,
+        height: 80,
         marginLeft: theme.spacing(4),
       },
     fileNamePos: {

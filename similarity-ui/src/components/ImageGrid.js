@@ -18,19 +18,20 @@ const useStyles = makeStyles((theme) => ({
       overflow: 'hidden',
       backgroundColor: theme.palette.background.paper,
     },
+    paper: {
+        padding: theme.spacing(1),
+        margin: 'auto',
+        maxWidth: 500,
+      },
     image: {
-        width: 200,
-        height: 200,
-        paddingTop: theme.spacing(2)
+        width: 80,
+        height: 80
       },
     img: {
+        margin: 'auto',
         display: 'block',
-        width: 180,
-        height: 180,
-        paddingLeft: theme.spacing(2)
-      },
-    fileNamePos: {
-        marginLeft: theme.spacing(2),
+        width: 80,
+        height: 80,
       },
     orange: {
         color: theme.palette.getContrastText(deepOrange[500]),
@@ -38,27 +39,21 @@ const useStyles = makeStyles((theme) => ({
     },
     andesite: {
         color: red[300],
-        marginLeft: theme.spacing(2),
     },
     gneiss: {
         color: deepPurple[300],
-        marginLeft: theme.spacing(2),
     },
     marble: {
         color: brown[300],
-        marginLeft: theme.spacing(2),
     },
     quartzite: {
         color: blue[300],
-        marginLeft: theme.spacing(2),
     },
     rhyolite: {
         color: deepOrange[300],
-        marginLeft: theme.spacing(2),
     },
     schist: {
         color: teal[300],
-        marginLeft: theme.spacing(2),
     },
   }));
 
@@ -93,7 +88,14 @@ function ImageGrid(props) {
     }
 
     const selectImage = (event) => {
-        props.selectedImage({url: event.target.src});
+        if (event.target.src === undefined){
+            console.log("---------undefined image -----------")
+            console.log(event.target)
+        }
+        else{
+            props.selectedImage({url: event.target.src});
+        }
+        
       }
 
     return (
@@ -101,64 +103,73 @@ function ImageGrid(props) {
             {
                 imageList.map( image => (
                     <Grid key={image.url} item xs={12} sm={2}>
-                        <Paper variant="outlined">
-                            <Grid item xs={12} sm container>
-                                <Grid item xs>
+                        <Paper className={classes.paper}>
+                            <Grid container spacing={2}>
+                                <Grid item>
                                     <ButtonBase className={classes.image} onClick={selectImage}>   
                                         <img className={classes.img} src={image.url} alt={image.fileName} />                                                                                                           
                                    </ButtonBase>  
                                 </Grid>
-                                <Grid item xs>                                 
-                                    <Typography className={classes.fileNamePos} color="textSecondary">
-                                        {image.fileName}  
-                                    </Typography> 
-                                    {
-                                        image.type === "andesite" && (
-                                            <Typography className={classes.fileNamePos} className={classes.andesite}>
-                                                {image.type}  
+                                <Grid item xs={12} sm container>    
+                                    <Grid item xs container direction="column" spacing={2}>
+                                        <Grid item xs>
+                                            <Typography variant="body2" color="textSecondary">
+                                                {image.fileName}  
                                             </Typography> 
-                                        )
-                                    }     
 
-                                    {
-                                        image.type === "gneiss" && (
-                                            <Typography className={classes.fileNamePos} className={classes.gneiss}>
-                                                {image.type}  
-                                            </Typography> 
-                                        )
-                                    } 
+                                            {
+                                                image.type === "andesite" && (
+                                                    <Typography className={classes.andesite}>
+                                                        {image.type}  
+                                                    </Typography> 
+                                                )
+                                            }     
 
-                                    {
-                                        image.type === "quartzite" && (
-                                            <Typography className={classes.fileNamePos} className={classes.quartzite}>
-                                                {image.type}  
-                                            </Typography> 
-                                        )
-                                    } 
+                                            {
+                                                image.type === "gneiss" && (
+                                                    <Typography className={classes.gneiss}>
+                                                        {image.type}  
+                                                    </Typography> 
+                                                )
+                                            } 
 
-                                    {
-                                        image.type === "marble" && (
-                                            <Typography className={classes.fileNamePos} className={classes.marble}>
-                                                {image.type}  
-                                            </Typography> 
-                                        )
-                                    } 
+                                            {
+                                                image.type === "quartzite" && (
+                                                    <Typography className={classes.quartzite}>
+                                                        {image.type}  
+                                                    </Typography> 
+                                                )
+                                            } 
 
-                                    {
-                                        image.type === "rhyolite" && (
-                                            <Typography className={classes.fileNamePos} className={classes.rhyolite}>
-                                                {image.type}  
-                                            </Typography> 
-                                        )
-                                    } 
+                                            {
+                                                image.type === "marble" && (
+                                                    <Typography className={classes.marble}>
+                                                        {image.type}  
+                                                    </Typography> 
+                                                )
+                                            } 
 
-                                    {
-                                        image.type === "schist" && (
-                                            <Typography className={classes.fileNamePos} className={classes.schist}>
-                                                {image.type}  
-                                            </Typography> 
-                                        )
-                                    }                                                             
+                                            {
+                                                image.type === "rhyolite" && (
+                                                    <Typography className={classes.rhyolite}>
+                                                        {image.type}  
+                                                    </Typography> 
+                                                )
+                                            } 
+
+                                            {
+                                                image.type === "schist" && (
+                                                    <Typography className={classes.schist}>
+                                                        {image.type}  
+                                                    </Typography> 
+                                                )
+                                            }   
+                        
+                                        </Grid>
+
+                                    </Grid>                             
+                                   
+                                                                                              
                                                                     
                                 </Grid>
                             </Grid> 
