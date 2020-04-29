@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SAVE_TYPES, SAVE_SEARCH_STRING, FETCH_IMIAGE_LIST, SELECTED_IMAGE } from 'actions/types';
+import { SAVE_TYPES, SAVE_SEARCH_STRING, FETCH_IMIAGE_LIST, SELECTED_IMAGE, UPDATE_WINDOW_WIDTH } from 'actions/types';
 
 export function savedTypes(type){
     return {
@@ -22,7 +22,6 @@ export function selectedImage(selectedImage){
     }
 }
 
-
 export function fetchImageList(){
     const response = axios.get('https://341llhka93.execute-api.us-east-1.amazonaws.com/api/images');
 
@@ -32,3 +31,9 @@ export function fetchImageList(){
     };
 }
 
+export function updateWindowWidth(width){
+    return {
+        type: UPDATE_WINDOW_WIDTH,
+        payload: width
+    }
+}

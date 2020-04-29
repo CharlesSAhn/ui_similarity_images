@@ -13,11 +13,9 @@ import InputBase from '@material-ui/core/InputBase';
 import InputLabel from '@material-ui/core/InputLabel';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import { grey, indigo } from '@material-ui/core/colors';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
+import { grey } from '@material-ui/core/colors';
+
+import SimilarImages from 'components/SimilarImages'
 
 const BootstrapInput = withStyles((theme) => ({
     root: {
@@ -71,8 +69,6 @@ const useStyles = makeStyles((theme) => ({
     },
     image: {
         display: 'block',
-        width: 300,
-        height: 300
     },
     chip: {
         margin: theme.spacing(0.5),
@@ -104,17 +100,21 @@ const useStyles = makeStyles((theme) => ({
 
 function Image(props){
 
+    const image_width = props.width_dimension / 6.7;
+    const image_width_thumbnail = props.width_dimension / 15;
+
     const url = props.imageurl.url
     const url_list = url.split("/")
     const filename = url_list.pop()
     const type = url_list.pop()
     const classes = useStyles();
     const [algorithm, setAlgorithm] = useState('cosine');
-    let similar_images = []
+    
 
     const [similarImages, setSimilarImages] = useState([]);
 
     const closeImage = () => {
+        setSimilarImages([])
         props.selectedImage(null)
     };
 
@@ -124,19 +124,29 @@ function Image(props){
 
     function getRandomInt(max) {
         return Math.floor(Math.random() * Math.floor(max));
-      }
+    }
+
+    function compare(a, b){
+        let comparison = 0;
+        if (a.score < b.score) {
+            comparison = 1;
+        } else if (a.score > b.score) {
+            comparison = -1;
+        }
+        return comparison;
+    }
 
     const getSimilarImages = () => {
-         
+        let similar_images = []
         let i;
 
         for (i = 0; i < 10; i ++){
             const random_num = getRandomInt(props.imageList.images.length)
-            similar_images.push(props.imageList.images[random_num])
+            let img_obj = props.imageList.images[random_num]
+            img_obj["score"] = (random_num/props.imageList.images.length).toFixed(3)
+            similar_images.push(img_obj)
         }
-        console.log(similar_images)
-        setSimilarImages(similar_images)
-        
+        setSimilarImages(similar_images.sort(compare));    
     }
 
     return (
@@ -149,8 +159,8 @@ function Image(props){
                         </IconButton >
                     </Grid>
                     <Grid container item xs={12} className={classes.margin}> 
-                        <Grid item xs={12} sm={6}>
-                            <img className={classes.image} src={url} alt={props.imageurl} /> 
+                        <Grid item xs={12} sm={4}>
+                            <img className={classes.image} src={url} alt={props.imageurl} height={image_width} width={image_width} /> 
                         </Grid> 
                         <Grid item xs={12} sm={6}>
                             <Grid item>
@@ -203,34 +213,13 @@ function Image(props){
                             </Button>
                         </Grid>
                     </Grid>
-                    {
-                        similarImages.length > 0 && (
-                            <Grid container item xs={12} className={classes.margin}> 
-                                <Grid item>                                   
-                                    {similarImages[0].fileName}     
-                                    <GridList className={classes.gridList} cols={5}>
-                                        {
-                                            similarImages.map((image, index) => (
-                                                <GridListTile key={index}>
-                                                    <img src={image.url} alt={image.fileName} />
-
-                                                    <GridListTileBar
-                                                        title={image.type} 
-                                                        classes={{
-                                                            root: classes.titleBar,
-                                                            title: classes.title,
-                                                        }}
-                                                        
-                                                    />
-                                                </GridListTile>
-                                            ))
-                                        }
-                                    </GridList>                              
-                                </Grid>
-                            </Grid>
-                        )
-                    }
-                    
+                    <Grid container item xs={12} className={classes.margin}>  
+                        {
+                            similarImages.length > 0 && (
+                                <SimilarImages similarImages={similarImages} image_width_thumbnail={image_width_thumbnail}/>
+                            )
+                        }
+                    </Grid>
                 </Grid>
             </Paper>
             

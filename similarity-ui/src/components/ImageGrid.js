@@ -24,14 +24,12 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: 500,
       },
     image: {
-        width: 80,
-        height: 80
+        justifyContent: "center"
       },
     img: {
         margin: 'auto',
         display: 'block',
-        width: 80,
-        height: 80,
+        justifyContent: "center"
       },
     orange: {
         color: theme.palette.getContrastText(deepOrange[500]),
@@ -39,22 +37,7 @@ const useStyles = makeStyles((theme) => ({
     },
     andesite: {
         color: red[300],
-    },
-    gneiss: {
-        color: deepPurple[300],
-    },
-    marble: {
-        color: brown[300],
-    },
-    quartzite: {
-        color: blue[300],
-    },
-    rhyolite: {
-        color: deepOrange[300],
-    },
-    schist: {
-        color: teal[300],
-    },
+    }
   }));
 
 
@@ -65,7 +48,9 @@ function ImageGrid(props) {
     const classes = useStyles();
 
     let imageList = []
-    
+
+    const image_width = props.thumbnail ? props.width_dimension / 15: props.width_dimension / 7;
+    const grid_spacing = props.thumbnail ? 1 : 2;
 
     // filter based on the rock types
     if (props.type[0] === "" || props.type.length === 0){
@@ -78,7 +63,6 @@ function ImageGrid(props) {
 
 
     //filter based on the search text
-    console.log(props.searchField)
     if (props.searchField.length > 0){
         if (props.searchField[0] !== ""){
             imageList = imageList.filter( function(image) {
@@ -99,15 +83,15 @@ function ImageGrid(props) {
       }
 
     return (
-        <Grid container spacing={3}> 
+        <Grid container spacing={grid_spacing}> 
             {
                 imageList.map( image => (
                     <Grid key={image.url} item xs={12} sm={2}>
-                        <Paper className={classes.paper}>
+                        <Paper className={classes.paper} variant="outlined">
                             <Grid container spacing={2}>
                                 <Grid item>
-                                    <ButtonBase className={classes.image} onClick={selectImage}>   
-                                        <img className={classes.img} src={image.url} alt={image.fileName} />                                                                                                           
+                                    <ButtonBase className={classes.image} height={image_width} width={image_width} onClick={selectImage}>   
+                                        <img className={classes.img} src={image.url} alt={image.fileName} height={image_width} width={image_width} />                                                                                                           
                                    </ButtonBase>  
                                 </Grid>
                                 <Grid item xs={12} sm container>    
@@ -117,54 +101,9 @@ function ImageGrid(props) {
                                                 {image.fileName}  
                                             </Typography> 
 
-                                            {
-                                                image.type === "andesite" && (
-                                                    <Typography className={classes.andesite}>
-                                                        {image.type}  
-                                                    </Typography> 
-                                                )
-                                            }     
-
-                                            {
-                                                image.type === "gneiss" && (
-                                                    <Typography className={classes.gneiss}>
-                                                        {image.type}  
-                                                    </Typography> 
-                                                )
-                                            } 
-
-                                            {
-                                                image.type === "quartzite" && (
-                                                    <Typography className={classes.quartzite}>
-                                                        {image.type}  
-                                                    </Typography> 
-                                                )
-                                            } 
-
-                                            {
-                                                image.type === "marble" && (
-                                                    <Typography className={classes.marble}>
-                                                        {image.type}  
-                                                    </Typography> 
-                                                )
-                                            } 
-
-                                            {
-                                                image.type === "rhyolite" && (
-                                                    <Typography className={classes.rhyolite}>
-                                                        {image.type}  
-                                                    </Typography> 
-                                                )
-                                            } 
-
-                                            {
-                                                image.type === "schist" && (
-                                                    <Typography className={classes.schist}>
-                                                        {image.type}  
-                                                    </Typography> 
-                                                )
-                                            }   
-                        
+                                            <Typography className={classes.andesite}>
+                                                {image.type}  
+                                            </Typography>                             
                                         </Grid>
 
                                     </Grid>                             

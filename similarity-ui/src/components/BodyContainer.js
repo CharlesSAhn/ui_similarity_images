@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Filter from 'components/FilterOptions';
 import ImageList from 'components/ImageList';
-
+import * as actions from 'actions';
 import { connect } from 'react-redux';
 
 
@@ -15,7 +15,7 @@ class BodyContainer extends Component {
                 {                    
                     <Grid item xs={12} sm={12}>
                         <Filter/>  
-                        <ImageList imageurl={this.props.selectedImage} />
+                        <ImageList imageurl={this.props.selectedImage}/>
                     </Grid>                  
                 }                                         
             </Grid>

@@ -69,6 +69,7 @@ function FilterOptions(props) {
     const handleSearchFieldUpdate = (event) => {
 
         setSearchField(event.target.value);
+        props.saveSearchString(event.target.value);
       };
 
 
@@ -97,7 +98,6 @@ function FilterOptions(props) {
                     variant="outlined"
                     value ={searchField}
                     onChange={handleSearchFieldUpdate}
-                    onKeyPress={handleKeyPress}
                 />
             </FormControl>
             
